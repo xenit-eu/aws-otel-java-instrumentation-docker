@@ -1,33 +1,41 @@
-buildscript {
-    repositories {
-        mavenCentral()
+plugins {
+    id "eu.xenit.docker" version "5.3.2"
+    id "base"
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    version = "1.17.0"
+}
+
+def myAttribute = Attribute.of("org.gradle.dependency.bundling", String)
+
+configurations {
+    awsOtelAgent {
+        attributes {
+            attribute(myAttribute, "shadowed")
+        }
     }
 }
 
-plugins {
-    id "com.bmuschko.docker-remote-api" version "7.2.0"
+dependencies {
+    awsOtelAgent(group: 'software.amazon.opentelemetry', name: 'aws-opentelemetry-agent', version: project.ext.version, ext: 'jar')
+    attributesSchema {
+        attribute(myAttribute)
+    }
 }
 
-// Import task types
-import com.bmuschko.gradle.docker.tasks.image.Dockerfile
-import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
-import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+dockerBuild {
+    repositories = ['hub.xenit.eu/customer-oup/aws-otel-java-agent']
+}
 
-task createDockerfile(type: Dockerfile) {
+createDockerFile {
     from 'busybox'
-    addFile("https://github.com/aws-observability/aws-otel-java-instrumentation/releases/download/v1.16.0/aws-opentelemetry-agent.jar", "javaagent.jar")
+    smartCopy configurations.awsOtelAgent.singleFile, "javaagent.jar"
     runCommand("chmod -R go+r /javaagent.jar")
-}
-
-// Use task types
-task buildDockerImage(type: DockerBuildImage) {
-    dependsOn createDockerfile
-    images.add(getTagFromImageName())
-}
-
-task pushDockerImage(type: DockerPushImage) {
-    dependsOn buildDockerImage
-    images = buildDockerImage.images
 }
 
 def getTagFromImageName() {
