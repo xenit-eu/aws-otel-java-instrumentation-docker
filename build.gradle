@@ -8,7 +8,7 @@ repositories {
 }
 
 ext {
-    version = "1.17.0"
+    awsOtelVersion = "1.16.0"
 }
 
 def myAttribute = Attribute.of("org.gradle.dependency.bundling", String)
@@ -22,7 +22,7 @@ configurations {
 }
 
 dependencies {
-    awsOtelAgent(group: 'software.amazon.opentelemetry', name: 'aws-opentelemetry-agent', version: project.ext.version, ext: 'jar')
+    awsOtelAgent(group: 'software.amazon.opentelemetry', name: 'aws-opentelemetry-agent', version: project.ext.awsOtelVersion, ext: 'jar')
     attributesSchema {
         attribute(myAttribute)
     }
