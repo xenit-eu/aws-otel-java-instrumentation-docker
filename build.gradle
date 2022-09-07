@@ -22,7 +22,7 @@ configurations {
 }
 
 dependencies {
-    awsOtelAgent(group: 'software.amazon.opentelemetry', name: 'aws-opentelemetry-agent', version: project.ext.awsOtelVersion, ext: 'jar')
+    awsOtelAgent(group: 'software.amazon.opentelemetry', name: 'aws-opentelemetry-agent', version: '1.16.0', ext: 'jar')
     attributesSchema {
         attribute(myAttribute)
     }
