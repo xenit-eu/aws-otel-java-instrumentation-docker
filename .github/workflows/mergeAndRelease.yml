@@ -11,7 +11,7 @@ jobs:
         run: gh pr merge --auto --merge "$PR_URL" # Use Github CLI to merge automatically the PR
         env:
           PR_URL: ${{github.event.pull_request.html_url}}
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{secrets.PERSONAL_ACCESS_TOKEN}}
 
   release:
     runs-on: ubuntu-latest
@@ -26,8 +26,8 @@ jobs:
       - name: Login to xenit Container Registry
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DCOKER_REGISTRY_USERNAME }}
-          password: ${{ secrets.DCOKER_REGISTRY_PASSWORD }}
+          username: ${{ secrets.XENIT_DOCKER_REGISTRY_USERNAME }}
+          password: ${{ secrets.XENIT_DOCKER_REGISTRY_PASSWORD }}
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
