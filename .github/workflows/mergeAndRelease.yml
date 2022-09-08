@@ -1,6 +1,6 @@
 name: Build and Release Docker Images
 on:
-  push:
+  pull_request:
 
 jobs:
   dependabot:
