@@ -38,5 +38,5 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Execute Gradle build
-        run: >
-#          ./gradlew pushDockerImage -Peu.xenit.docker.registry.url=https://hub.xenit.eu/v2 -Peu.xenit.docker.registry.username=${{ secrets.DOCKER_USER }} -Peu.xenit.docker.registry.password=${{ secrets.DOCKER_PASSWORD }}
+        run: ./gradlew pushDockerImage
+#  -Peu.xenit.docker.registry.url=https://hub.xenit.eu/v2 -Peu.xenit.docker.registry.username=${{ secrets.DOCKER_USER }} -Peu.xenit.docker.registry.password=${{ secrets.DOCKER_PASSWORD }}
