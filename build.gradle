@@ -1,9 +1,9 @@
 plugins {
-    id "eu.xenit.docker" version "5.3.2"
+    id "eu.xenit.docker" version "5.3.0"
     id "base"
 }
 
-ext.aws_otel_version = '1.15.0'
+ext.aws_otel_version = '1.17.0'
 
 repositories {
     mavenCentral()
