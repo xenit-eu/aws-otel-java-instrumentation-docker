@@ -1,0 +1,40 @@
+name: Build and Release Docker Images
+on:
+  push:
+
+jobs:
+  dependabot:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor == 'dependabot[bot]' && github.event_name == 'pull_request'}} # Detect that the PR author is dependabot
+    steps:
+      - name: Enable auto-merge for Dependabot PRs
+        run: gh pr merge --auto --merge "$PR_URL" # Use Github CLI to merge automatically the PR
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+  release:
+    runs-on: ubuntu-latest
+    needs: dependabot
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Login to xenit Container Registry
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DCOKER_REGISTRY_USERNAME }}
+          password: ${{ secrets.DCOKER_REGISTRY_PASSWORD }}
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Build gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Execute Gradle build
+        run: >
+          ./gradlew pushDockerImage

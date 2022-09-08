@@ -27,8 +27,8 @@ dependencies {
 }
 
 dockerBuild {
-    repositories = ['hub.xenit.eu/customer-oup/aws-otel-java-agent']
-//    tags = [dependencies.]
+    repositories = ['xenit/aws-otel-autoinstrumentation-java']
+    tags = [project.ext.aws_otel_version, 'latest']
 }
 
 createDockerFile {
