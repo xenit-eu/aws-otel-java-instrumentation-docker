@@ -1,4 +1,4 @@
-name: Build and Release Docker Images
+name: Merge Depenedabot PR
 on:
   pull_request:
 jobs:
