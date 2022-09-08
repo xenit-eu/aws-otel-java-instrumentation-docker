@@ -40,4 +40,4 @@ jobs:
 
       - name: Execute Gradle build
         run: >
-          ./gradlew pushDockerImage -Peu.xenit.docker.registry.url=https://hub.xenit.eu/v2 -Peu.xenit.artifactory.username=${{ secrets.DOCKER_USER }} -Peu.xenit.artifactory.password=${{ secrets.DOCKER_PASSWORD }}
+          ./gradlew pushDockerImage -Peu.xenit.docker.registry.url=https://hub.xenit.eu/v2 -Peu.xenit.docker.registry.username=${{ secrets.DOCKER_USER }} -Peu.xenit.docker.registry.password=${{ secrets.DOCKER_PASSWORD }}
