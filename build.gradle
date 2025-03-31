@@ -3,7 +3,7 @@ plugins {
     id "base"
 }
 
-ext.aws_otel_version = '2.0.1'
+ext.aws_otel_version = '2.10.0'
 
 repositories {
     mavenCentral()
